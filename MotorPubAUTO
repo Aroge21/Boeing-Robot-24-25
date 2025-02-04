@@ -1,0 +1,43 @@
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+class MotorPub(Node):
+    def __init__(self):
+        super().__init__('motor_control_pub')
+
+        # Create a publisher for the 'commands' topic
+        self.publisher_ = self.create_publisher(String, 'commands', 10)
+
+        # Command sequence and their durations
+        self.commands = ["forwards", "left", "right"]
+        self.durations = [3.0, 2.0, 5.0]  # Time in seconds for each command
+        self.command_index = 0  # Start with the first command
+
+        # Initialize the timer with the first command's duration
+        self.timer = self.create_timer(self.durations[self.command_index], self.timer_callback)  
+
+    def timer_callback(self):
+        """Publishes a command from the sequence and updates the timer dynamically."""
+        msg = String()
+        msg.data = self.commands[self.command_index]  # Get the current command
+
+        # Publish the command
+        self.publisher_.publish(msg)
+        self.get_logger().info(f'Publishing: "{msg.data}" for {self.durations[self.command_index]} seconds')
+
+        # Move to the next command
+        self.command_index = (self.command_index + 1) % len(self.commands)
+
+        # Reset the timer with the new command's duration
+        self.timer.cancel()  # Cancel the old timer
+        self.timer = self.create_timer(self.durations[self.command_index], self.timer_callback)
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = MotorPub()
+    rclpy.spin(node)
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
