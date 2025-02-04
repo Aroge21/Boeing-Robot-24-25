@@ -1,0 +1,66 @@
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+
+class MotorPub(Node):
+   def __init__(self):
+       super().__init__('motor_control_pub')
+
+
+       # Initialize the publisher
+       self.publisher_ = self.create_publisher(String, 'commands', 10)
+
+
+       # Store the current command (default to "stop" if no command is given yet)
+       self.current_command = "stop"
+
+
+       # Initialize the timer to publish every second
+       self.timer = self.create_timer(1.0, self.timer_callback)  # 1hz
+
+
+
+
+   def timer_callback(self):
+       """Publishes the current command."""
+       msg = String()
+       msg.data = self.current_command  # Use the latest command
+       self.publisher_.publish(msg)
+
+
+   def get_user_input(self):
+       """Get user input for a new command and update the current command."""
+       while rclpy.ok():
+           # Ask the user for a command input
+           user_input = input("Enter a direction (forwards, backwards, left, right, stop): ").strip().lower()
+
+
+           # Validate input and update the current command
+           if user_input in ["forwards", "backwards", "left", "right", "stop"]:
+               self.current_command = user_input
+               self.get_logger().info(f"New command: {self.current_command}")
+           else:
+               self.get_logger().warn("Invalid command. Please enter a valid direction.")
+
+
+def main(args=None):
+   rclpy.init(args=args)
+   node = MotorPub()
+
+
+   # Run the user input in a separate thread to allow continuous publishing
+   # (This is not blocking, so the node can keep spinning while accepting input)
+   import threading
+   input_thread = threading.Thread(target=node.get_user_input)
+   input_thread.daemon = True  # Allow thread to exit when the main program exits
+   input_thread.start()
+
+
+   # Keep spinning to publish messages
+   rclpy.spin(node)
+   rclpy.shutdown()
+
+
+if __name__ == '__main__':
+   main()
