@@ -1,0 +1,64 @@
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+import serial
+import time
+
+class MotorSub(Node):
+    def __init__(self):
+        super().__init__('motor_control_sub')
+
+        # Initialize the subscriber to listen to "motor_control"
+        self.subscription = self.create_subscription(
+            String,
+            'commands',  # Change this to match your topic name
+            self.command_callback,
+            10
+        )
+        self.subscription  # prevent unused variable warning
+
+        # Initialize Serial Communication with Arduino
+        try:
+            self.serial_conn = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+            time.sleep(2)  # Give time for the connection to establish
+            self.get_logger().info("Serial connection established with Arduino")
+        except serial.SerialException:
+            self.get_logger().error("Could not open serial port. Check the connection.")
+            self.serial_conn = None
+
+    def command_callback(self, msg):
+        """Handles movement commands received from the topic."""
+        command = msg.data.lower()
+        if command == "forwards":
+            self.send_command_to_arduino("F")
+        elif command == "backwards":
+            self.send_command_to_arduino("B")
+        elif command == "left":
+            self.send_command_to_arduino("L")
+        elif command == "right":
+            self.send_command_to_arduino("R")
+        elif command == "stop":
+            self.send_command_to_arduino("S")
+        else:
+            self.get_logger().warn(f"Unknown command: {command}")
+
+    def send_command_to_arduino(self, cmd):
+        """Sends a command to the Arduino over serial."""
+        if self.serial_conn:
+            try:
+                self.serial_conn.write(cmd.encode())
+                self.get_logger().info(f"Sent command: {cmd}")
+            except serial.SerialException:
+                self.get_logger().error("Failed to send command to Arduino")
+        else:
+            self.get_logger().error("Serial connection not established")
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = MotorSub()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
