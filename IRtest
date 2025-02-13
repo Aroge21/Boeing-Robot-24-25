@@ -1,0 +1,62 @@
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+import RPi.GPIO as GPIO 
+
+
+# Define GPIO pins for IR sensors
+LEFT_IR_PIN = 17 
+RIGHT_IR_PIN = 27 
+
+
+class IRPub(Node):
+   def __init__(self):
+       super().__init__('irmotorpub')
+      
+       # Create a publisher for sending movement commands
+       self.publisher_ = self.create_publisher(String, 'commands', 10)
+      
+       # Set up GPIO for IR sensors
+       GPIO.setmode(GPIO.BCM)
+       GPIO.setup(LEFT_IR_PIN, GPIO.IN)
+       GPIO.setup(RIGHT_IR_PIN, GPIO.IN)
+      
+       # Timer to periodically check sensor values and send commands
+       self.timer = self.create_timer(0.1, self.timer_callback)  # 10 Hz
+
+
+   def timer_callback(self):
+       # Read IR sensor values
+       left_ir = GPIO.input(LEFT_IR_PIN)
+       right_ir = GPIO.input(RIGHT_IR_PIN)
+      
+       # Create a message to send
+       msg = String()
+
+
+       # Logic based on sensor values
+       if left_ir == 0 and right_ir == 0:
+           msg.data = "forwards"  # Both sensors not on tape, move forward
+       elif left_ir == 1 and right_ir == 0:
+           msg.data = "left"  # Left sensor on tape, turn left
+       elif left_ir == 0 and right_ir == 1:
+           msg.data = "right"  # Right sensor on tape, turn right
+       else:
+           msg.data = "stop"  # Both sensors on tape, stop (or could be another logic)
+
+
+       # Publish the command
+       self.publisher_.publish(msg)
+       self.get_logger().info(f'Publishing: "{msg.data}"')
+
+
+def main(args=None):
+   rclpy.init(args=args)
+   node = IRPub()
+   rclpy.spin(node)
+   node.destroy_node()
+   rclpy.shutdown()
+
+
+if __name__ == '__main__':
+   main()
