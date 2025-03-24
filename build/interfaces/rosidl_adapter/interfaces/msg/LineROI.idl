@@ -1,0 +1,17 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from interfaces/msg/LineROI.msg
+// generated code does not contain a copyright notice
+
+#include "interfaces/msg/ROI.idl"
+
+module interfaces {
+  module msg {
+    struct LineROI {
+      interfaces::msg::ROI roi_up;
+
+      interfaces::msg::ROI roi_center;
+
+      interfaces::msg::ROI roi_down;
+    };
+  };
+};

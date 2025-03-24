@@ -1,0 +1,27 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from interfaces/srv/SetPose.srv
+// generated code does not contain a copyright notice
+
+
+module interfaces {
+  module srv {
+    struct SetPose_Request {
+      sequence<float> position;
+
+      sequence<float> orientation;
+
+      sequence<float> tolerance;
+
+      float resolution;
+    };
+    struct SetPose_Response {
+      boolean success;
+
+      sequence<float> pulse;
+
+      uint32 min_variation;
+
+      sequence<float> current_pulse;
+    };
+  };
+};

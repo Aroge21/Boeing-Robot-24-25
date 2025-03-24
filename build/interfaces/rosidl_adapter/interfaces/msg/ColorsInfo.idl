@@ -1,0 +1,13 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from interfaces/msg/ColorsInfo.msg
+// generated code does not contain a copyright notice
+
+#include "interfaces/msg/ColorInfo.idl"
+
+module interfaces {
+  module msg {
+    struct ColorsInfo {
+      sequence<interfaces::msg::ColorInfo> data;
+    };
+  };
+};

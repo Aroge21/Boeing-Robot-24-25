@@ -1,0 +1,7 @@
+[console_scripts]
+ar_app = app.ar_app:main
+hand_gesture = app.hand_gesture:main
+hand_trajectory = app.hand_trajectory_node:main
+lidar_controller = app.lidar_controller:main
+line_following = app.line_following:main
+object_tracking = app.object_tracking:main

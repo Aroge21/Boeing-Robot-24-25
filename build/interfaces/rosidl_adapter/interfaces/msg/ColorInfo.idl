@@ -1,0 +1,24 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from interfaces/msg/ColorInfo.msg
+// generated code does not contain a copyright notice
+
+
+module interfaces {
+  module msg {
+    struct ColorInfo {
+      string color;
+
+      int32 width;
+
+      int32 height;
+
+      int32 x;
+
+      int32 y;
+
+      int32 radius;
+
+      int32 angle;
+    };
+  };
+};

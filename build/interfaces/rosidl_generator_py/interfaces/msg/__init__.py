@@ -1,0 +1,11 @@
+from interfaces.msg._color_detect import ColorDetect  # noqa: F401
+from interfaces.msg._color_info import ColorInfo  # noqa: F401
+from interfaces.msg._colors_info import ColorsInfo  # noqa: F401
+from interfaces.msg._line_roi import LineROI  # noqa: F401
+from interfaces.msg._object_info import ObjectInfo  # noqa: F401
+from interfaces.msg._objects_info import ObjectsInfo  # noqa: F401
+from interfaces.msg._pixel_position import PixelPosition  # noqa: F401
+from interfaces.msg._point2_d import Point2D  # noqa: F401
+from interfaces.msg._points import Points  # noqa: F401
+from interfaces.msg._pose2_d import Pose2D  # noqa: F401
+from interfaces.msg._roi import ROI  # noqa: F401

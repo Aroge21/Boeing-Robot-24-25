@@ -1,0 +1,17 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from interfaces/srv/SetStringList.srv
+// generated code does not contain a copyright notice
+
+
+module interfaces {
+  module srv {
+    struct SetStringList_Request {
+      sequence<string> data;
+    };
+    struct SetStringList_Response {
+      boolean success;
+
+      string message;
+    };
+  };
+};

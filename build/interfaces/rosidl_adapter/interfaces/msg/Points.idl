@@ -1,0 +1,13 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from interfaces/msg/Points.msg
+// generated code does not contain a copyright notice
+
+#include "interfaces/msg/PixelPosition.idl"
+
+module interfaces {
+  module msg {
+    struct Points {
+      sequence<interfaces::msg::PixelPosition> points;
+    };
+  };
+};

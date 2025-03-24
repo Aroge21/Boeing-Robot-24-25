@@ -1,0 +1,29 @@
+{
+  "package_name": "interfaces",
+  "non_idl_tuples": [
+    "/home/ubuntu/ros2_ws/src/interfaces:msg/ColorDetect.msg",
+    "/home/ubuntu/ros2_ws/src/interfaces:msg/ColorInfo.msg",
+    "/home/ubuntu/ros2_ws/src/interfaces:msg/ColorsInfo.msg",
+    "/home/ubuntu/ros2_ws/src/interfaces:msg/LineROI.msg",
+    "/home/ubuntu/ros2_ws/src/interfaces:msg/ObjectInfo.msg",
+    "/home/ubuntu/ros2_ws/src/interfaces:msg/ObjectsInfo.msg",
+    "/home/ubuntu/ros2_ws/src/interfaces:msg/PixelPosition.msg",
+    "/home/ubuntu/ros2_ws/src/interfaces:msg/Point2D.msg",
+    "/home/ubuntu/ros2_ws/src/interfaces:msg/Points.msg",
+    "/home/ubuntu/ros2_ws/src/interfaces:msg/Pose2D.msg",
+    "/home/ubuntu/ros2_ws/src/interfaces:msg/ROI.msg",
+    "/home/ubuntu/ros2_ws/src/interfaces:srv/GetPose.srv",
+    "/home/ubuntu/ros2_ws/src/interfaces:srv/SetCircleROI.srv",
+    "/home/ubuntu/ros2_ws/src/interfaces:srv/SetColorDetectParam.srv",
+    "/home/ubuntu/ros2_ws/src/interfaces:srv/SetColorRGBA.srv",
+    "/home/ubuntu/ros2_ws/src/interfaces:srv/SetFloat64List.srv",
+    "/home/ubuntu/ros2_ws/src/interfaces:srv/SetFloat64.srv",
+    "/home/ubuntu/ros2_ws/src/interfaces:srv/SetInt64.srv",
+    "/home/ubuntu/ros2_ws/src/interfaces:srv/SetLineROI.srv",
+    "/home/ubuntu/ros2_ws/src/interfaces:srv/SetPoint.srv",
+    "/home/ubuntu/ros2_ws/src/interfaces:srv/SetPose2D.srv",
+    "/home/ubuntu/ros2_ws/src/interfaces:srv/SetPose.srv",
+    "/home/ubuntu/ros2_ws/src/interfaces:srv/SetStringList.srv",
+    "/home/ubuntu/ros2_ws/src/interfaces:srv/SetString.srv"
+  ]
+}

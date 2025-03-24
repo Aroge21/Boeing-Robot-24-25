@@ -1,0 +1,14 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from interfaces/msg/ColorDetect.msg
+// generated code does not contain a copyright notice
+
+
+module interfaces {
+  module msg {
+    struct ColorDetect {
+      string color_name;
+
+      string detect_type;
+    };
+  };
+};

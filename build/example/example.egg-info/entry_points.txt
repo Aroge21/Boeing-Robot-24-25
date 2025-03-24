@@ -1,0 +1,26 @@
+[console_scripts]
+automatic_pick = example.navigation_transport.automatic_pick:main
+body_and_rgb_control = example.body_control.include.body_and_rgb_control:main
+body_control = example.body_control.include.body_control:main
+body_track = example.body_control.include.body_track:main
+color_detect = example.color_detect.color_detect_node:main
+color_sorting = example.color_sorting.color_sorting_node:main
+color_track = example.color_track.color_track_node:main
+cross_bridge = example.rgbd_function.cross_bridge_node:main
+fall_down_detect = example.body_control.include.fall_down_detect:main
+finger_control = example.hand_trajectory.finger_control:main
+garbage_classification = example.garbage_classification.garbage_classification:main
+hand_detect = example.hand_track.hand_detect_node:main
+hand_gesture_control = example.hand_gesture_control.hand_gesture_control_node:main
+hand_track = example.hand_track.hand_track_node:main
+hand_trajectory = example.hand_trajectory.hand_trajectory_node:main
+line_follow_clean = example.line_follow_clean.line_follow_clean_node:main
+navigation_transport = example.navigation_transport.navigation_transport:main
+object_classification = example.rgbd_function.object_classification:main
+prevent_falling = example.rgbd_function.prevent_falling_node:main
+self_driving = example.self_driving.self_driving:main
+track_and_grab = example.rgbd_function.track_and_grab:main
+track_object = example.rgbd_function.track_object_node:main
+vc_object_classification = example.rgbd_function.vc_object_classification:main
+vc_track_and_grab = example.rgbd_function.vc_track_and_grab:main
+yolov5_node = example.yolov5_detect.yolov5_node:main

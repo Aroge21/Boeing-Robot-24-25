@@ -1,0 +1,17 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from interfaces/srv/SetFloat64.srv
+// generated code does not contain a copyright notice
+
+
+module interfaces {
+  module srv {
+    struct SetFloat64_Request {
+      double data;
+    };
+    struct SetFloat64_Response {
+      boolean success;
+
+      string message;
+    };
+  };
+};
