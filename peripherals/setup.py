@@ -26,9 +26,11 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'joystick_control = peripherals.joystick_control:main',
             'tf_broadcaster_imu = peripherals.tf_broadcaster_imu:main',
             'teleop_key_control = peripherals.teleop_key_control:main',
+            'xbox_teleop = peripherals.xbox_teleop:main',
+            'ir_sensor = peripherals.ir_sensor:main',
         ],
     },
 )
+

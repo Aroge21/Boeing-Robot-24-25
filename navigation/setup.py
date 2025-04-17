@@ -25,6 +25,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'right_hand = navigation.right_hand:main',
         ],
     },
 )

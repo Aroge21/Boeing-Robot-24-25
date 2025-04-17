@@ -22,7 +22,7 @@ def launch_setup(context):
         PythonLaunchDescriptionSource(
             os.path.join(controller_package_path, 'launch/controller.launch.py')),
     )
-    
+
     depth_camera_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(peripherals_package_path, 'launch/depth_camera.launch.py')),
@@ -58,8 +58,18 @@ def launch_setup(context):
         }.items(),
     )
 
-    joystick_control_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(os.path.join(peripherals_package_path, 'launch/joystick_control.launch.py')),
+    ir_sensor_node = Node(
+        package='peripherals',
+        executable='ir_sensor',
+        name='ir_sensor_node',
+        output='screen',
+    )
+
+    xbox_teleop_node = Node(
+        package='peripherals',
+        executable='xbox_teleop',
+        name='xbox_teleop',
+        output='screen',
     )
 
     startup_check_node = Node(
@@ -76,8 +86,9 @@ def launch_setup(context):
             rosbridge_websocket_launch,
             web_video_server_node,
             start_app_launch,
-            joystick_control_launch,
             init_pose_launch,
+            xbox_teleop_node,
+            ir_sensor_node,
             ]
 
 def generate_launch_description():
