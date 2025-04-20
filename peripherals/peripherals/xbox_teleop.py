@@ -1,5 +1,6 @@
 import rclpy
 from rclpy.node import Node
+from std_msgs.msg import Bool
 from geometry_msgs.msg import Twist
 import pygame
 import time
@@ -8,6 +9,9 @@ class XboxTeleop(Node):
     def __init__(self):
         super().__init__('xbox_teleop')
         self.publisher_ = self.create_publisher(Twist, '/controller/cmd_vel', 10)
+        self.auto_mode_pub = self.create_publisher(Bool, 'autonomous_mode', 10)
+        self.autonomous_enabled = False  # Start in manual mode
+
         self.timer = self.create_timer(0.05, self.timer_callback)  # 20Hz
         self.reconnect_timer = self.create_timer(2.0, self.check_connection)  # Retry every 2 seconds if disconnected
 
@@ -54,6 +58,20 @@ class XboxTeleop(Node):
             self.axis_left_y = -self.joystick.get_axis(1)  # Left stick vertical = forward/back
             self.axis_left_x = self.joystick.get_axis(0)   # Left stick horizontal = left/right
             self.enable = self.joystick.get_button(4)      # LB button
+            button_y = self.joystick.get_button(3)         # Y button
+            button_b = self.joystick.get_button(1)         # B button
+
+            # Autonomous mode toggle
+            if button_y and not self.autonomous_enabled:
+                self.get_logger().info("Autonomous mode ENABLED")
+                self.auto_mode_pub.publish(Bool(data=True))
+                self.autonomous_enabled = True
+            if button_b and self.autonomous_enabled:
+                self.get_logger().info("Autonomous mode DISABLED")
+                self.auto_mode_pub.publish(Bool(data=False))
+                self.publisher_.publish(Twist())  # Stop the robot when switching to manual
+                self.last_twist = Twist()
+                self.autonomous_enabled = False
 
             # Deadzone
             if abs(self.axis_left_y) < 0.1:
@@ -61,12 +79,14 @@ class XboxTeleop(Node):
             if abs(self.axis_left_x) < 0.1:
                 self.axis_left_x = 0.0
 
-            if self.enable and (self.axis_left_y != 0.0 or self.axis_left_x != 0.0):
+            # Only publish if manual mode is active and joystick is engaged
+            if not self.autonomous_enabled and self.enable and (self.axis_left_y != 0.0 or self.axis_left_x != 0.0):
                 twist = Twist()
                 twist.linear.x = self.axis_left_y * self.linear_scale
                 twist.angular.z = self.axis_left_x * self.angular_scale
-                self.publisher_.publish(twist)
-                self.last_twist = twist
+                if twist != self.last_twist:
+                    self.publisher_.publish(twist)
+                    self.last_twist = twist
                 self.last_input_time = time.time()
         except pygame.error:
             self.get_logger().warn('Lost controller connection.')
@@ -78,8 +98,9 @@ class XboxTeleop(Node):
 
     def publish_stop(self):
         stop = Twist()
-        self.publisher_.publish(stop)
-        self.last_twist = stop
+        if stop != self.last_twist:
+            self.publisher_.publish(stop)
+            self.last_twist = stop
 
 
 def main(args=None):
